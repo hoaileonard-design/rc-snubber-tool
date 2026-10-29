@@ -1,0 +1,56 @@
+:root { color-scheme: light; --ink:#172b44; --muted:#53667b; --line:#d5dfe9; --paper:#fff; --wash:#edf2f6; --teal:#126f70; --navy:#10283f; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--wash); color:var(--ink); font:14px/1.5 "Segoe UI",Arial,sans-serif; }
+button,input,select { font:inherit; }
+.app-header { padding:22px 28px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.eyebrow { margin:0 0 4px; font-size:11px; font-weight:700; letter-spacing:1.5px; color:#8bd2ce; }
+h1 { margin:0; font-size:24px; font-weight:600; line-height:1.35; }
+.connection { display:flex; align-items:center; gap:8px; color:#d6e8ed; font-size:12px; white-space:nowrap; }
+.connection i { width:7px; height:7px; background:#80d0bf; border-radius:50%; }
+.workspace { max-width:1800px; margin:auto; padding:20px; display:grid; grid-template-columns:320px minmax(0,1fr); gap:20px; align-items:start; }
+.controls { background:var(--paper); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.controls section { padding:18px; border-bottom:1px solid var(--line); }
+.controls section:last-child { border-bottom:0; }
+h2 { font-size:15px; margin:0 0 12px; }
+label { display:block; font-size:12px; font-weight:600; margin:10px 0 4px; }
+input,select { display:block; width:100%; min-width:0; padding:8px 9px; border:1px solid #bccbd9; border-radius:5px; background:#fff; color:var(--ink); min-height:38px; }
+input:disabled,select:disabled { background:#f2f4f6; color:#748294; }
+input:focus-visible,select:focus-visible,button:focus-visible { outline:3px solid #57aaa8; outline-offset:2px; }
+.field-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
+.hint { font-size:12px; line-height:1.5; color:var(--muted); margin:8px 0; }
+button { border:1px solid transparent; border-radius:5px; padding:10px 12px; background:var(--teal); color:#fff; font-weight:600; cursor:pointer; width:100%; margin-top:10px; }
+button:hover:not(:disabled) { background:#0c595b; }
+button.secondary { background:#f6f9fb; color:var(--ink); border-color:#c8d5e0; }
+button.secondary:hover:not(:disabled) { background:#e7eff4; }
+button:disabled { opacity:.5; cursor:default; }
+.button-row { display:grid; grid-template-columns:minmax(0,1fr) 70px; gap:8px; }
+.capture-status { background:#f5faf9; }
+#status { margin:0; font-weight:600; overflow-wrap:anywhere; }
+#status[data-phase="error"] { color:#a32f38; }
+#status[data-phase="sent"] { color:#126257; }
+.circuit-panel { min-width:0; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.panel-heading { padding:16px 20px; display:flex; gap:16px; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); }
+.panel-heading h2 { margin:0 0 3px; }
+.panel-heading p { color:var(--muted); font-size:12px; margin:0; }
+.badge { color:#506273; background:#edf3f7; font-size:10px; font-weight:700; padding:4px 7px; letter-spacing:.7px; border-radius:4px; white-space:nowrap; }
+iframe { display:block; width:100%; height:calc(100vh - 250px); min-height:610px; border:0; background:#20242a; }
+.evidence-note { padding:13px 18px; margin:0; color:#536476; font-size:12px; border-top:1px solid var(--line); }
+footer { padding:0 20px 20px; max-width:1800px; margin:auto; color:#64788b; font-size:11px; }
+[hidden] { display:none !important; }
+@media(max-width:1000px) { .workspace { grid-template-columns:280px minmax(0,1fr); gap:12px; padding:12px; } .app-header { padding:18px; } h1 { font-size:21px; } .connection { display:none; } .controls section { padding:14px; } iframe { min-height:650px; } }
+@media(max-width:720px) { .workspace { grid-template-columns:1fr; } .controls { display:grid; grid-template-columns:1fr 1fr; } .controls section { border-bottom:0; } .capture-status { grid-column:1/-1; } iframe { height:700px; min-height:500px; } h1 { font-size:20px; } .panel-heading { padding:14px; } }
+@media(max-width:480px) { .controls { display:block; } .controls section { border-bottom:1px solid var(--line); } }
+/* Desktop panel: keep the circuit visible while the controls scroll independently. */
+@media(min-width:721px) {
+  body { height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+  .app-header { padding:10px 18px; }
+  h1 { font-size:20px; }
+  .workspace { width:100%; flex:1; min-height:0; margin:0 auto; padding:10px; gap:10px; grid-template-columns:290px minmax(0,1fr); align-items:stretch; }
+  .controls { min-height:0; overflow-y:auto; }
+  .controls section { padding:12px; }
+  .circuit-panel { min-height:0; display:flex; flex-direction:column; }
+  .panel-heading { padding:8px 12px; }
+  iframe { flex:1; min-height:0; height:100%; }
+  .evidence-note { padding:6px 12px; font-size:11px; }
+  footer { margin:0 auto; padding:0 10px 4px; }
+}

@@ -24,6 +24,23 @@ class WaveformMetrics:
     settling_time: float
     v_final: float
     t_transition: float
+    zeta: float = float("nan")
+    settling_censored: bool = True
+    settling_band: float = 0.05
+    settling_hold: float = 500e-9
+    warnings: tuple = ()
+    frequency_reliable: bool = False
+
+
+@dataclass
+class ParasiticEstimate:
+    Lp_H: float
+    Cp_F: float
+    R_start_ohm: float
+    C_start_F: float
+    f0_Hz: float
+    f1_Hz: float
+    warnings: tuple = ()
 
 
 class WaveformAnalyzer:
@@ -119,46 +136,52 @@ class WaveformAnalyzer:
         t = df["time"].to_numpy()
         v = df["vds"].to_numpy()
 
-        if np.any(np.diff(t) < 0):
-            order = np.argsort(t)
-            t = t[order]
-            v = v[order]
-
+        WaveformAnalyzer._validate(t, v)
         return t, v
 
     # --- Xử lý tín hiệu ---
 
     @staticmethod
     def detect_turnoff_transition(t: np.ndarray, v: np.ndarray) -> int:
-        """Tìm chỉ số thời điểm chuyển mạch (turn-off) bằng cách tìm nơi có độ dốc
-        (dV/dt) lớn nhất về trị tuyệt đối — đây là thời điểm điện áp V_DS biến thiên
-        nhanh nhất khi MOSFET chuyển từ dẫn sang ngắt."""
-        dv = np.gradient(v, t)
-        return int(np.argmax(np.abs(dv)))
+        """Cạnh tăng trước đỉnh lớn nhất; không dùng dV/dt của chính dao động."""
+        WaveformAnalyzer._validate(t, v)
+        peak = int(np.argmax(v))
+        final = float(np.median(v[-max(5, len(v) // 10):]))
+        initial = float(np.quantile(v[:peak + 1], 0.05))
+        level = initial + 0.5 * (final - initial)
+        crosses = np.flatnonzero((v[:peak] < level) & (v[1:peak + 1] >= level))
+        return int(crosses[-1] + 1) if len(crosses) else 0
 
     @staticmethod
-    def _fft_dominant_freq(t: np.ndarray, v_detrended: np.ndarray) -> float:
-        """Ước lượng tần số dao động chủ đạo bằng FFT khi không đủ đỉnh để đo trực tiếp
-        chu kỳ dao động (dùng khi tín hiệu tắt dần quá nhanh, chỉ còn 0-1 đỉnh rõ ràng)."""
-        n = len(t)
-        if n < 4:
-            return 0.0
-        dt_mean = np.mean(np.diff(t))
-        if dt_mean <= 0:
-            return 0.0
-        t_uniform = np.linspace(t[0], t[-1], n)
-        v_uniform = np.interp(t_uniform, t, v_detrended)
-        spectrum = np.abs(np.fft.rfft(v_uniform))
-        freqs = np.fft.rfftfreq(n, d=(t_uniform[1] - t_uniform[0]))
-        if len(spectrum) <= 1:
-            return 0.0
-        spectrum[0] = 0.0  # loai bo thanh phan DC
-        dominant_idx = int(np.argmax(spectrum))
-        return float(freqs[dominant_idx])
+    def _validate(t, v):
+        if len(t) != len(v) or len(t) < WaveformAnalyzer.MIN_POINTS:
+            raise InsufficientDataError("Cần ít nhất 10 cặp thời gian/điện áp.")
+        if not np.all(np.isfinite(t)) or not np.all(np.isfinite(v)):
+            raise WaveformFileError("Dữ liệu chứa NaN hoặc vô cực.")
+        if np.any(np.diff(t) <= 0):
+            raise WaveformFileError("Thời gian phải tăng liên tục, không trùng điểm hoặc ghép nhiều lần quét.")
 
     @staticmethod
-    def analyze(t: np.ndarray, v: np.ndarray) -> WaveformMetrics:
-        """Trích xuất các chỉ số quá độ từ dạng sóng V_DS(t) sau thời điểm chuyển mạch."""
+    def analyze(t: np.ndarray, v: np.ndarray, *, start=None, end=None,
+                plateau=None, settling_band=0.05, settling_hold=500e-9) -> WaveformMetrics:
+        """Một cạnh tăng trong cửa sổ đã chọn. ζ là ước lượng cộng hưởng đơn mode.
+
+        Không suy ra L/C độc lập từ một file. Plateau có thể nhập từ đoạn ổn định
+        khác; không đồng nhất nó với Vin của mạch.
+        """
+        t, v = np.asarray(t, dtype=float), np.asarray(v, dtype=float)
+        WaveformAnalyzer._validate(t, v)
+        if not 0 < settling_band < 1 or not np.isfinite(settling_hold) or settling_hold <= 0:
+            raise WaveformFileError("Dải xác lập và thời gian giữ phải hợp lệ.")
+        if start is not None and not np.isfinite(start) or end is not None and not np.isfinite(end):
+            raise WaveformFileError("Giới hạn cửa sổ phải hữu hạn.")
+        window = np.ones(len(t), dtype=bool)
+        if start is not None:
+            window &= t >= start
+        if end is not None:
+            window &= t <= end
+        t, v = t[window], v[window]
+        WaveformAnalyzer._validate(t, v)
         idx = WaveformAnalyzer.detect_turnoff_transition(t, v)
         post_t = t[idx:]
         post_v = v[idx:]
@@ -171,7 +194,9 @@ class WaveformAnalyzer:
 
         # Gia tri xac lap: lay trung vi cua doan duoi tin hieu (10% cuoi, toi thieu 5 diem)
         tail_len = max(5, len(post_v) // 10)
-        v_final = float(np.median(post_v[-tail_len:]))
+        v_final = float(np.median(post_v[-tail_len:])) if plateau is None else float(plateau)
+        if not np.isfinite(v_final):
+            raise WaveformFileError("Điện áp plateau phải hữu hạn.")
 
         i_peak = int(np.argmax(post_v))
         v_peak = float(post_v[i_peak])
@@ -184,26 +209,53 @@ class WaveformAnalyzer:
             )
         percent_overshoot = (v_peak - v_final) / v_final * 100.0
 
-        # Tan so ringing: tim cac dinh dao dong tren tin hieu da tru muc xac lap.
+        warnings = []
+        if plateau is None:
+            warnings.append("Plateau ước lượng từ đuôi cửa sổ; kiểm tra lại nếu tín hiệu chưa ổn định.")
+        # Các đỉnh đầu tránh sai lệch do nhiễu đuôi và tần số biến đổi theo Coss.
         detrended = post_v - v_final
-        peaks_idx, _ = find_peaks(detrended)
+        peaks_idx, _ = find_peaks(detrended, prominence=max(0.003 * abs(v_final), 0.02))
+        peaks_idx = peaks_idx[detrended[peaks_idx] > max(0.01 * abs(v_final), 0.02)][:8]
+        if post_v[0] > post_v[1] and detrended[0] > 0.01 * abs(v_final):
+            peaks_idx = np.r_[0, peaks_idx][:8]
+        zeta = float("nan")
+        reliable = False
         if len(peaks_idx) >= 2:
-            periods = np.diff(post_t[peaks_idx])
+            peak_times = []
+            for k in peaks_idx:
+                pt = post_t[k]
+                if 0 < k < len(post_t) - 1:
+                    local = (post_t[k-1:k+2] - pt) * 1e9
+                    fit = np.polyfit(local, post_v[k-1:k+2], 2)
+                    offset = -fit[1] / (2 * fit[0]) if fit[0] < 0 else 0.0
+                    pt += float(np.clip(offset, local[0], local[-1])) * 1e-9
+                peak_times.append(pt)
+            periods = np.diff(peak_times)
             f_ring = float(1.0 / np.mean(periods))
+            reliable = len(peaks_idx) >= 3
+            if np.std(periods) / np.mean(periods) > 0.15:
+                reliable = False
+                warnings.append("Chu kỳ không đều: có thể nhiều mode cộng hưởng hoặc cửa sổ chưa phù hợp.")
+            if len(peaks_idx) >= 3:
+                delta = float(np.median(np.log(detrended[peaks_idx[:-1]] / detrended[peaks_idx[1:]])))
+                if delta >= 0:
+                    zeta = delta / np.sqrt(4 * np.pi**2 + delta**2)
+            if f_ring * float(np.max(np.diff(post_t))) > 0.1:
+                reliable = False
+                warnings.append("Có khoảng lấy mẫu dưới 10 điểm/chu kỳ; cần xuất dạng sóng dày hơn.")
         else:
-            f_ring = WaveformAnalyzer._fft_dominant_freq(post_t, detrended)
+            f_ring = float("nan")
+            warnings.append("Không đủ đỉnh để nhận dạng tần số/ζ; không suy tần số từ cạnh đơn.")
 
-        # Thoi gian xac lap: thoi diem (tinh tu t_peak) ma tin hieu di vao va o lai trong
-        # dai +-2% quanh gia tri xac lap den het cua so du lieu.
-        band = 0.02 * abs(v_final)
+        # Tính từ cạnh tăng; cần ở lại trong dải tới cuối cửa sổ và đủ thời gian giữ.
+        band = settling_band * abs(v_final)
         within_band = np.abs(post_v - v_final) <= band
-        settling_time = t_peak
-        for k in range(len(post_t)):
-            if np.all(within_band[k:]):
-                settling_time = float(post_t[k] - t[idx])
-                break
-        else:
-            settling_time = float(post_t[-1] - t[idx])  # chua xac lap trong cua so quan sat
+        outside = np.flatnonzero(~within_band)
+        k = int(outside[-1] + 1) if len(outside) else 0
+        censored = k >= len(post_t) or post_t[-1] - post_t[min(k, len(post_t)-1)] < settling_hold
+        settling_time = float("nan") if censored else float(post_t[k] - t[idx])
+        if censored:
+            warnings.append("Chưa xác lập trong cửa sổ với thời gian giữ yêu cầu.")
 
         return WaveformMetrics(
             v_peak=v_peak,
@@ -213,4 +265,27 @@ class WaveformAnalyzer:
             settling_time=settling_time,
             v_final=v_final,
             t_transition=float(t[idx]),
+            zeta=float(zeta), settling_censored=bool(censored),
+            settling_band=settling_band, settling_hold=settling_hold, warnings=tuple(warnings),
+            frequency_reliable=reliable,
         )
+
+    @staticmethod
+    def identify_parasitics(before: WaveformMetrics, with_cap: WaveformMetrics,
+                            added_cap_F: float) -> ParasiticEstimate:
+        """Phép dịch tần, cùng mode Lp/Cp và chỉ thêm tụ tại cùng hai nút."""
+        f0, f1 = before.f_ring, with_cap.f_ring
+        if not all(np.isfinite(x) and x > 0 for x in (f0, f1, added_cap_F)):
+            raise InsufficientDataError("Cần hai tần số dao động hợp lệ và tụ thử > 0.")
+        if not before.frequency_reliable or not with_cap.frequency_reliable:
+            raise InsufficientDataError("Chưa đủ độ tin cậy để suy L/C: cần ≥3 đỉnh, chu kỳ đều và lấy mẫu đủ dày.")
+        if f1 >= f0:
+            raise InsufficientDataError("Tụ thử phải làm giảm tần số (f1 < f0). Kiểm tra cùng điểm mạch và cùng điều kiện.")
+        cp = added_cap_F / ((f0 / f1)**2 - 1)
+        lp = 1 / ((2 * np.pi * f0)**2 * cp)
+        warnings = ["Lp/Cp tương đương; R/C khởi đầu phải quét và kiểm chứng trên mạch gốc."]
+        if f1 / f0 > 0.95:
+            warnings.append("Dịch tần quá nhỏ, phép nhận dạng nhạy với sai số đo.")
+        if any(np.isfinite(m.zeta) and m.zeta > 0.2 for m in (before, with_cap)):
+            warnings.append("Dao động tắt mạnh; công thức dịch tần không hiệu chỉnh damping có thể sai lệch.")
+        return ParasiticEstimate(lp, cp, float(np.sqrt(lp / cp)), 3 * cp, f0, f1, tuple(warnings))

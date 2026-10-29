@@ -1,0 +1,61 @@
+{
+  "version": "115",
+  "acquired": "2026-10-29",
+  "source": "https://github.com/pfalstad/circuitjs1",
+  "license": "GPL-2.0-or-later",
+  "upstream_source_commit_inspected": "8ac55f22a03606579b822b3dccd4dc10de1ddc5b",
+  "scope": "Published bundle unmodified; local HTML and selected example menu; no cloud scripts",
+  "source_binary_commit_equivalence": "Not established; published bytes identified by SHA256",
+  "assets": {
+    "circuitjs115/circuitjs-BCWt1uSs.js": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/circuitjs-BCWt1uSs.js",
+      "sha256": "9926d4535471e0e9ae5c0359982da23425bfb834f37d711fc34f059ca9f6bcc5",
+      "bytes": 1185159
+    },
+    "circuitjs115/circuitjs--wuhdAF1.css": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/circuitjs--wuhdAF1.css",
+      "sha256": "f5bd5bdf23681daca23f70cad654c1f872b96f642a65752b3d2df855c7b72b29",
+      "bytes": 6754
+    },
+    "circuitjs115/font/fontello.css": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/font/fontello.css",
+      "sha256": "175a5ec77320dd6eb3e9ac55792fe61c0b16fd5896b7e117b611d25363eccd07",
+      "bytes": 4022
+    },
+    "circuitjs115/font/fontello.woff2": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/font/fontello.woff2",
+      "sha256": "e8e04bf941e4c3222230daed38417228fae2f801720cbae9d654a9c952692b37",
+      "bytes": 9116
+    },
+    "circuitjs115/font/fontello.woff": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/font/fontello.woff",
+      "sha256": "8722b23aabda9d578de4ffceb47982d998017f4d8c50fa57587d11acb144c8f7",
+      "bytes": 10780
+    },
+    "COPYING.txt": {
+      "url": "https://raw.githubusercontent.com/pfalstad/circuitjs1/master/COPYING.txt",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092
+    },
+    "circuitjs115/images/hborder.png": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/images/hborder.png",
+      "sha256": "0f1ec9292bec78c780d8a05c3ab517c492ddec308592ac3118f3f2b982518fd6",
+      "bytes": 1995
+    },
+    "circuitjs115/circuits/conv-buck.txt": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/circuits/conv-buck.txt",
+      "sha256": "c0f14d48715a3cdb2969c9ed4a39979bfc483962d69740a7276f00f90aa82d9f",
+      "bytes": 1036
+    },
+    "circuitjs115/circuits/lrc.txt": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/circuits/lrc.txt",
+      "sha256": "636b88a660157658841a58119f75166fcff3ac95727715b5f5791fd05861e66e",
+      "bytes": 426
+    },
+    "circuitjs115/circuits/inductkick-block.txt": {
+      "url": "https://www.falstad.com/circuit/circuitjs115/circuits/inductkick-block.txt",
+      "sha256": "2252861b4d897e7d87263212ab3ae938021c8119b0c6cc36e4ca7021cd08a763",
+      "bytes": 312
+    }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "L100_Rload10": {
+    "circuit": "Buck 24 V, Lstray=100 nH, tải 10 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.251003074645993,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "21e43330ca3b9be3058c9cb78e67d9e336e16ad189a5fdc354daf0e270b0d7c8",
+    "source_json_sha256": "18abcde2c3650421e1809e3977fbd58312e5249458076f8422042d9e2a975c4c",
+    "selected_reference": {
+      "R_ohm": 10.0,
+      "C_F": 4.700000000000001e-09
+    }
+  },
+  "L100_Rload15": {
+    "circuit": "Buck 24 V, Lstray=100 nH, tải 15 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.23342695236206,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "7614430442941da13a7b0b34c0d5feb9d9b15b041ebf8e671620c6c17e5fd486",
+    "source_json_sha256": "d804dd0806ca1080f30ef0219e1106facce36a29f16b77120e59dd7481b1c96e",
+    "selected_reference": {
+      "R_ohm": 10.0,
+      "C_F": 3.3e-09
+    }
+  },
+  "L100_Rload8": {
+    "circuit": "Buck 24 V, Lstray=100 nH, tải 8 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.262185287475585,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "15c44535c6c3e28d39009f75f98a678722dc043e87bf42f92dc4737fde061cb4",
+    "source_json_sha256": "2d8e7c7502544a5474c38432463db7b6fffc23f92c8ca911a39f11ca6002d5b0",
+    "selected_reference": {
+      "R_ohm": 10.0,
+      "C_F": 6.8000000000000005e-09
+    }
+  },
+  "L200_Rload10": {
+    "circuit": "Buck 24 V, Lstray=200 nH, tải 10 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.25100746154785,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "a310de9330bd1f0402f96d60c4677236b5d39088b3b347513789347621f1ca25",
+    "source_json_sha256": "21465cd1b193b31c2edfd06b5b2c37c0126faf3050901adc2c16946f0fa407c8",
+    "selected_reference": {
+      "R_ohm": 10,
+      "C_F": 1e-08
+    }
+  },
+  "L200_Rload15": {
+    "circuit": "Buck 24 V, Lstray=200 nH, tải 15 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.233411598205564,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "b337cee52d6b6530800911535cef7521c31944426ee663ebfb8718d76ea484a8",
+    "source_json_sha256": "29e3f05816a9050d44f1e6d33031c23ae64796c43bd44a4a88ebe1e6960aa423",
+    "selected_reference": {
+      "R_ohm": 15,
+      "C_F": 4.7e-09
+    }
+  },
+  "L200_Rload8": {
+    "circuit": "Buck 24 V, Lstray=200 nH, tải 8 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.26216993331909,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "19a273b23168937ede5fd802e45770113bd39693bff991afca7af95b3969772a",
+    "source_json_sha256": "45404612c69ca5d16226df9ab4c744c1c999845cdd2034b95f88d27899abbb40",
+    "selected_reference": {
+      "R_ohm": 10,
+      "C_F": 1e-08
+    }
+  },
+  "L50_Rload10": {
+    "circuit": "Buck 24 V, Lstray=50 nH, tải 10 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.251099586486813,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "3694af36c2c0e948bd667c0454d53ec94e0dc8f42afbfdf4956e99c814b1df4b",
+    "source_json_sha256": "3c1e0c8f110a79240afc6b45a7088621cbc654ed0701559618ab177cf2d1b0b2",
+    "selected_reference": {
+      "R_ohm": 2.2,
+      "C_F": 4.700000000000001e-09
+    }
+  },
+  "L50_Rload15": {
+    "circuit": "Buck 24 V, Lstray=50 nH, tải 15 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.23344230651855,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "32aa676a4ecc013ccf6cb9c5d56baf09279bbfff782545875ffaa238aca1cc22",
+    "source_json_sha256": "27ea51ac2042ebe7215c7587b47dc4ccb8be4ca6d2c86eb1f1274ad340ce5a80",
+    "selected_reference": {
+      "R_ohm": 4.7,
+      "C_F": 2.2000000000000003e-09
+    }
+  },
+  "L50_Rload8": {
+    "circuit": "Buck 24 V, Lstray=50 nH, tải 8 Ω",
+    "topology": "Buck",
+    "node": "drain – sw",
+    "source": "P6, mô hình chức năng gần đúng",
+    "v_target": 28.262213802337644,
+    "ts_max_ns": 200,
+    "settling_band": 0.05,
+    "settling_hold_ns": 500,
+    "operating_point": {
+      "Vin": 24,
+      "Lout_uH": 220,
+      "fsw_kHz": 20,
+      "duty_percent": 50.84926657397271
+    },
+    "evidence_scope": "Chỉ mạch Buck; sàng lọc và điểm chọn có mức kiểm chứng khác nhau",
+    "source_csv_sha256": "60efcceec33c334a381ac951101167b0590d6feaae2ea61e0ad6329253397df7",
+    "source_json_sha256": "8a618a4239601d480c0675993048ef0ce8c8d0de197cb31f7195db81a6cd7727",
+    "selected_reference": {
+      "R_ohm": 4.7,
+      "C_F": 4.700000000000001e-09
+    }
+  },
+  "before": {
+    "raw": "C:\\Doantotnghiep\\LTspice\\Driver\\khao_sat_p6\\L100_Rload10_none.raw",
+    "sha256": "2f3c83b9bfd2314d2fe4a6bff8037d7c276f279bbc2d3dbe8ffe220ac23949ef"
+  },
+  "with_470pF": {
+    "raw": "C:\\Doantotnghiep\\LTspice\\Driver\\khao_sat_p6\\L100_Rload10_add470p.raw",
+    "sha256": "1f8ea20950b8c129b28850b999a1cd8535d844cde0ff1abf50513d9d1e746dca"
+  },
+  "after_RC": {
+    "raw": "C:\\Doantotnghiep\\LTspice\\Driver\\khao_sat_p6\\L100_Rload10_fine_R10_C4.7n.raw",
+    "sha256": "5189c5a190af01944d3427a9095cd4fd9773ee4bf54a864ab2d96a08e9e85bdb"
+  }
+}

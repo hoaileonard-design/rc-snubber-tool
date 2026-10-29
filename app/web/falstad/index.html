@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Mạch tương tác · Snubber</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="bridge.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <div><p class="eyebrow">SNUBBER · MẠCH TƯƠNG TÁC</p><h1>Thấy mạch thay đổi. Đo lại tác dụng.</h1></div>
+    <span class="connection"><i aria-hidden="true"></i> Cầu nối cục bộ với app</span>
+  </header>
+  <main class="workspace">
+    <aside class="controls" aria-label="Điều khiển mạch và bản ghi">
+      <section>
+        <h2>1 · Chọn mạch</h2>
+        <label for="source_mode">Nguồn sơ đồ</label>
+        <select id="source_mode"><option value="demo">Mẫu RLC ký sinh minh họa</option><option value="custom">Mạch tự vẽ / nhập trong CircuitJS</option></select>
+        <p class="hint">Mẫu này minh họa một vòng cộng hưởng. Không phải bản sao mạch Buck P6.</p>
+        <label for="variant">Vai trò dạng sóng</label>
+        <select id="variant"><option value="before">A · Chưa có snubber</option><option value="after">B · Đã gắn RC</option><option value="test_cap">Tụ thử · Nhận dạng Lp/Cp</option></select>
+        <div id="custom_context_group" hidden>
+          <label for="custom_context">Tên mạch và điều kiện dùng chung</label>
+          <input id="custom_context" type="text" maxlength="200" placeholder="Ví dụ: Mạch A, 24 V, tải 10 Ω, 20 kHz">
+          <p class="hint">Giữ cùng tên cho bộ A/B/tụ thử của cùng mạch và cùng điều kiện. Bạn tự chọn hai nút, tự đặt snubber và nguồn kích thích trong sơ đồ.</p>
+        </div>
+        <button id="load_app" class="secondary" type="button">Lấy thông số từ app</button>
+        <div class="field-grid" id="demo_fields">
+          <div><label for="r_ohm">R snubber · Ω</label><input id="r_ohm" type="number" value="10" min="0.01" step="any"></div>
+          <div><label for="c_nf">C snubber · nF</label><input id="c_nf" type="number" value="4.7" min="0.001" step="any"></div>
+          <div><label for="lp_nh">Lp · nH</label><input id="lp_nh" type="number" value="100" min="0.001" step="any"></div>
+          <div><label for="cp_pf">Cp · pF</label><input id="cp_pf" type="number" value="274" min="0.001" step="any"></div>
+          <div><label for="vin_v">Bước nguồn · V</label><input id="vin_v" type="number" value="24" min="0.01" step="any"></div>
+          <div><label for="added_pf">Tụ thử · pF</label><input id="added_pf" type="number" value="470" min="0.001" step="any"></div>
+        </div>
+        <button id="rebuild" class="secondary" type="button">Dựng lại mẫu từ các giá trị trên</button>
+      </section>
+      <section>
+        <h2>2 · Chọn điện áp cần ghi</h2>
+        <label for="positive_node">Nút dương</label><select id="positive_node"><option value="label:OUT">OUT</option></select>
+        <label for="negative_node">Nút âm</label><select id="negative_node"><option value="ground">GND · 0 V</option></select>
+        <p class="hint">Điện áp ghi = nút dương − nút âm. Các nút được cập nhật khi bạn sửa sơ đồ.</p>
+        <div class="field-grid">
+          <div><label for="duration_ns">Cửa sổ · ns</label><input id="duration_ns" type="number" value="5000" min="1" step="any"></div>
+          <div><label for="dt_ns">Bước tối đa · ns</label><input id="dt_ns" type="number" value="0.5" min="0.001" step="any"></div>
+        </div>
+        <p class="hint" id="capture_hint">Mẫu bắt đầu lại từ 0; bước nguồn xuất hiện ở 300 ns. Ghi tối đa 20.000 điểm.</p>
+        <div class="button-row"><button id="record" type="button" disabled>Ghi và gửi về app</button><button id="stop" class="secondary" type="button" disabled>Dừng</button></div>
+      </section>
+      <section class="capture-status" aria-live="polite" aria-atomic="true">
+        <p id="status" data-phase="loading">Đang mở CircuitJS…</p>
+        <p id="capture_count" class="hint">Chưa có bản ghi.</p>
+      </section>
+    </aside>
+    <section class="circuit-panel" aria-label="Sơ đồ CircuitJS">
+      <div class="panel-heading"><div><h2>Sơ đồ và dạng sóng</h2><p>Sửa mạch trong khung. Bản ghi được chuyển về app snubber đang mở.</p></div><span class="badge">MINH HỌA</span></div>
+      <iframe id="simulator" title="CircuitJS · sơ đồ mạch tương tác" src="vendor/circuitjs.html?running=false&amp;startCircuit=blank.txt&amp;hideSidebar=false" referrerpolicy="no-referrer"></iframe>
+      <p class="evidence-note">Falstad/CircuitJS dùng cho thao tác và minh họa. Dữ liệu được gắn nhãn riêng; không dùng thay kết quả LTspice hoặc phép đo phần cứng. Với mạch tự vẽ, app không tự xác định vị trí hay tổng hợp snubber cho bạn.</p>
+    </section>
+  </main>
+  <footer>Chạy trên máy của bạn · Không dùng dịch vụ đám mây trong cầu nối này · CircuitJS: Paul Falstad &amp; Iain Sharp · <a href="vendor/COPYING.txt" target="_blank" rel="noopener">Giấy phép GPL</a></footer>
+</body>
+</html>

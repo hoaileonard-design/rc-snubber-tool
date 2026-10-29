@@ -1,0 +1,22 @@
+[
+  {
+    "Path": "C:\\Doantotnghiep\\APP_khoiphuc\\app\\ui\\circuit_tab.py",
+    "Hash": "58F643758741355B2E758FAE34443568246019955B619E9989AEC0C5F88AFBC9"
+  },
+  {
+    "Path": "C:\\Doantotnghiep\\APP_khoiphuc\\app\\web\\falstad\\bridge.js",
+    "Hash": "8A4449FC4812D56B68445EC61E42EB01107BD97EA3B20721F5674999D9A149DC"
+  },
+  {
+    "Path": "C:\\Doantotnghiep\\APP_khoiphuc\\app\\web\\falstad\\styles.css",
+    "Hash": "A335ABB0A07BC0A2B037EE113938962ABCA50F02B43E8DA0C881C37E2814058F"
+  },
+  {
+    "Path": "C:\\Doantotnghiep\\APP_khoiphuc\\requirements.txt",
+    "Hash": "F6C4B6267AC61B9DF9A7D9D22142D77B2ED54F657E583371D5A3DB039597A707"
+  },
+  {
+    "Path": "C:\\Doantotnghiep\\APP_khoiphuc\\tools\\verify_falstad_embedded.py",
+    "Hash": "A6D329581906EDEA592864A2B0904BD01531333BE1D36B04C59119E31E5F2F37"
+  }
+]

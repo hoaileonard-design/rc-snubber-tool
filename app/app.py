@@ -8,6 +8,7 @@ from app import config
 from app.ui.calculator_tab import CalculatorTab
 from app.ui.waveform_tab import WaveformTab
 from app.ui.optimizer_tab import OptimizerTab
+from app.ui.circuit_tab import CircuitTab
 
 
 class SnubberApp(ctk.CTk):
@@ -25,9 +26,10 @@ class SnubberApp(ctk.CTk):
         self.tabview = ctk.CTkTabview(self)
         self.tabview.pack(fill="both", expand=True, padx=10, pady=(0, 10))
 
-        tab1 = self.tabview.add("1. Calculator")
-        tab2 = self.tabview.add("2. Waveform Survey")
-        tab3 = self.tabview.add("3. Optimization & RC-Map")
+        tab1 = self.tabview.add(config.TAB_CALCULATOR)
+        tab2 = self.tabview.add(config.TAB_WAVEFORM)
+        tab3 = self.tabview.add(config.TAB_OPTIMIZER)
+        tab4 = self.tabview.add(config.TAB_CIRCUIT)
 
         self.calculator_tab = CalculatorTab(tab1, app_ref=self)
         self.calculator_tab.pack(fill="both", expand=True)
@@ -37,6 +39,14 @@ class SnubberApp(ctk.CTk):
 
         self.optimizer_tab = OptimizerTab(tab3, app_ref=self)
         self.optimizer_tab.pack(fill="both", expand=True)
+        self.circuit_tab = CircuitTab(tab4, app_ref=self)
+        self.circuit_tab.pack(fill="both", expand=True)
+        self.tabview.set(config.TAB_WAVEFORM)
+
+    def destroy(self):
+        if hasattr(self, "circuit_tab"):
+            self.circuit_tab.close()
+        super().destroy()
 
     def _build_header(self):
         header = ctk.CTkFrame(self, fg_color="transparent")
@@ -58,34 +68,30 @@ class SnubberApp(ctk.CTk):
     # ------------------------------------------------------- Cross-tab wiring
     def push_params_to_optimizer(self, params: dict):
         self.optimizer_tab.load_params_from_dict(params)
-        self.tabview.set("3. Optimization & RC-Map")
+        self.tabview.set(config.TAB_OPTIMIZER)
 
     def push_params_to_calculator(self, params: dict):
         self.calculator_tab.load_params_from_dict(params)
-        self.tabview.set("1. Calculator")
+        self.tabview.set(config.TAB_CALCULATOR)
 
-    def push_from_waveform_to_calculator(self, v_peak: float, v_in: float):
-        """Nhận V_peak, V_in đo được từ Tab 2 (Waveform Survey) và điền vào Tab 1
-        (Calculator), sau đó tự động chuyển sang tab đó."""
+    def push_from_waveform_to_calculator(self, v_peak: float, v_in: float = None):
+        """Giữ API cũ, chỉ chuyển Vpeak. Plateau không được suy thành Vin."""
         try:
             self.calculator_tab.entry_vpeak_unprot.set(v_peak)
-            self.calculator_tab.entry_vin.set(v_in)
         except AttributeError as exc:
             messagebox.showerror(
                 "Lỗi", f"Không thể cập nhật thông số sang Calculator: {exc}"
             )
             return
-        self.tabview.set("1. Calculator")
+        self.tabview.set(config.TAB_CALCULATOR)
 
-    def push_from_waveform_to_optimizer(self, v_peak: float, v_in: float):
-        """Nhận V_peak, V_in đo được từ Tab 2 (Waveform Survey) và điền vào Tab 3
-        (Optimizer), sau đó tự động chuyển sang tab đó."""
+    def push_from_waveform_to_optimizer(self, v_peak: float, v_in: float = None):
+        """Giữ API cũ, chỉ chuyển Vpeak. Plateau không được suy thành Vin."""
         try:
             self.optimizer_tab.entry_vpeak_unprot.set(v_peak)
-            self.optimizer_tab.entry_vin.set(v_in)
         except AttributeError as exc:
             messagebox.showerror(
                 "Lỗi", f"Không thể cập nhật thông số sang Optimizer: {exc}"
             )
             return
-        self.tabview.set("3. Optimization & RC-Map")
+        self.tabview.set(config.TAB_OPTIMIZER)

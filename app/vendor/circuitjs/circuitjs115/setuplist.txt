@@ -1,0 +1,7 @@
+### Selected official examples; original simulator by Falstad/Sharp
++Examples
+blank.txt Blank circuit
+conv-buck.txt Buck converter (teaching model)
+lrc.txt LRC circuit
+inductkick-block.txt Blocking inductive kickback
+-

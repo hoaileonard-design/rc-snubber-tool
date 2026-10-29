@@ -1,5 +1,7 @@
 """Hàm tiện ích kiểm tra và chuyển đổi input người dùng nhập từ các ô CTkEntry."""
 
+import math
+
 from .errors import InputValidationError
 
 
@@ -11,9 +13,12 @@ def parse_float(text: str, field_name: str = "Giá trị") -> float:
     if text == "":
         raise InputValidationError(f"{field_name} không được để trống.")
     try:
-        return float(text)
+        value = float(text)
     except ValueError:
         raise InputValidationError(f"{field_name} không hợp lệ: '{text}' không phải là số.")
+    if not math.isfinite(value):
+        raise InputValidationError(f"{field_name} phải là số hữu hạn.")
+    return value
 
 
 def parse_positive_float(text: str, field_name: str = "Giá trị") -> float:
@@ -37,8 +42,11 @@ def parse_int_positive(text: str, field_name: str = "Giá trị") -> int:
     if text is None or text.strip() == "":
         raise InputValidationError(f"{field_name} không được để trống.")
     try:
-        value = int(float(text.strip()))
-    except ValueError:
+        number = parse_float(text, field_name)
+        if not number.is_integer():
+            raise ValueError
+        value = int(number)
+    except (ValueError, OverflowError):
         raise InputValidationError(f"{field_name} không hợp lệ: '{text}' không phải là số nguyên.")
     if value < 2:
         raise InputValidationError(f"{field_name} phải >= 2 để tạo được lưới quét (nhận được {value}).")

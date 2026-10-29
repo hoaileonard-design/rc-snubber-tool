@@ -1,0 +1,83 @@
+..........................E............................................. [ 84%]
+.............                                                            [100%]
+=================================== ERRORS ====================================
+_____ ERROR at setup of test_p6_reload_cannot_mix_with_later_falstad_file _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001B18AB3AF90>
+
+    @pytest.fixture
+    def application(monkeypatch):
+        messages = []
+        monkeypatch.setattr(messagebox, "showerror", lambda *args, **kwargs: messages.append(args))
+>       app = SnubberApp()
+              ^^^^^^^^^^^^
+
+tests\test_circuit_tab.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\app.py:16: in __init__
+    super().__init__()
+..\.venv\Lib\site-packages\customtkinter\windows\ctk_tk.py:40: in __init__
+    CTK_PARENT_CLASS.__init__(self, **pop_from_dict_by_set(kwargs, self._valid_tk_constructor_arguments))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <app.app.SnubberApp object .>, screenName = None, baseName = '__main__'
+className = 'Tk', useTk = True, sync = False, use = None
+
+    def __init__(self, screenName=None, baseName=None, className='Tk',
+                 useTk=True, sync=False, use=None):
+        """Return a new top level widget on screen SCREENNAME. A new Tcl interpreter will
+        be created. BASENAME will be used for the identification of the profile file (see
+        readprofile).
+        It is constructed from sys.argv[0] without extensions if None is given. CLASSNAME
+        is the name of the widget class."""
+        self.master = None
+        self.children = {}
+        self._tkloaded = False
+        # to avoid recursions in the getattr code in case of failure, we
+        # ensure that self.tk is always _something_.
+        self.tk = None
+        if baseName is None:
+            import os
+            baseName = os.path.basename(sys.argv[0])
+            baseName, ext = os.path.splitext(baseName)
+            if ext not in ('.py', '.pyc'):
+                baseName = baseName + ext
+        interactive = False
+>       self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       _tkinter.TclError: Can't find a usable tk.tcl in the following directories: 
+E           C:/Python314/tcl/tcl8.6/tk8.6 C:/Python314/tcl/tk8.6 C:/lib/tk8.6 C:/lib/tk8.6 C:/lib/tk8.6 C:/library
+E       
+E       C:/Python314/tcl/tk8.6/tk.tcl: couldn't read file "C:/Python314/tcl/tk8.6/icons.tcl": no such file or directory
+E       couldn't read file "C:/Python314/tcl/tk8.6/icons.tcl": no such file or directory
+E           while executing
+E       "source -encoding utf-8 C:/Python314/tcl/tk8.6/icons.tcl"
+E           (in namespace eval "::" script line 1)
+E           invoked from within
+E       "namespace eval :: [list source -encoding utf-8 [file join $::tk_library $file.tcl]]"
+E           (procedure "SourceLibFile" line 2)
+E           invoked from within
+E       "SourceLibFile icons"
+E           (in namespace eval "::tk" script line 2)
+E           invoked from within
+E       "namespace eval ::tk {
+E       	SourceLibFile icons
+E       	SourceLibFile button
+E       	SourceLibFile entry
+E       	SourceLibFile listbox
+E       	SourceLibFile menu
+E       	SourceLibFile panedw..."
+E           (file "C:/Python314/tcl/tk8.6/tk.tcl" line 506)
+E           invoked from within
+E       "source -encoding utf-8 C:/Python314/tcl/tk8.6/tk.tcl"
+E           ("uplevel" body line 1)
+E           invoked from within
+E       "uplevel #0 [list source -encoding utf-8 $file]"
+E       
+E       
+E       This probably means that tk wasn't installed properly.
+
+C:\Python314\Lib\tkinter\__init__.py:2484: TclError
+=========================== short test summary info ===========================
+ERROR tests/test_circuit_tab.py::test_p6_reload_cannot_mix_with_later_falstad_file
+84 passed, 1 error in 10.41s

@@ -1,0 +1,75 @@
+opened
+ready
+resized
+hide/show passed
+recording before
+recording after
+recording test_cap
+{
+  "status": "passed",
+  "native_child_windows": [
+    {
+      "hwnd": 529730,
+      "window_class": "Static",
+      "visible": false
+    },
+    {
+      "hwnd": 594870,
+      "window_class": "WRY_WEBVIEW",
+      "visible": true
+    },
+    {
+      "hwnd": 2560104,
+      "window_class": "Chrome_WidgetWin_0",
+      "visible": true
+    },
+    {
+      "hwnd": 529514,
+      "window_class": "Chrome_WidgetWin_1",
+      "visible": true
+    },
+    {
+      "hwnd": 1642188,
+      "window_class": "Chrome_RenderWidgetHostHWND",
+      "visible": true
+    },
+    {
+      "hwnd": 1576972,
+      "window_class": "Intermediate D3D Window",
+      "visible": true
+    }
+  ],
+  "layout": {
+    "bottom": 538.9000244140625,
+    "controlsScroll": "auto",
+    "height": 400.3000183105469,
+    "viewportHeight": 616,
+    "width": 1072.800048828125
+  },
+  "initial_width": 1394,
+  "resized_width": 1154,
+  "hide_show": "passed",
+  "close_reopen": "passed",
+  "captures": [
+    {
+      "role": "before",
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad_embedded\\captures\\falstad_20261029T101205951942Z_70f27d5af7f4a657.csv"
+    },
+    {
+      "role": "after",
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad_embedded\\captures\\falstad_20261029T101212666598Z_f239282705413686.csv"
+    },
+    {
+      "role": "test_cap",
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad_embedded\\captures\\falstad_20261029T101219614319Z_ff42a617dc535bf6.csv"
+    }
+  ],
+  "metrics": {
+    "before_peak_V": 47.85579523517738,
+    "after_peak_V": 27.684096012482986,
+    "Lp_nH": 100.00065084792057,
+    "Cp_pF": 274.41523010532967
+  },
+  "callback_errors": [],
+  "scope": "Real embedded Windows WebView2; DOM controls, native child/visibility/resize and desktop analysis checked. No physical mouse test or hardware validation."
+}

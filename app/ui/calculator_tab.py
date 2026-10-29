@@ -35,6 +35,8 @@ class CalculatorTab(ctk.CTkFrame):
         left.grid(row=0, column=0, sticky="nsew", padx=(10, 5), pady=10)
 
         d = config.DEFAULTS
+        ctk.CTkLabel(left, text="R/C khởi đầu và mô hình RLC tham khảo.\n"
+            "Đánh giá mạch thực tại tab Tối ưu theo dữ liệu.", justify="left", wraplength=420).pack(fill="x", pady=(0, 8))
         self.entry_vin = LabeledEntry(left, "Điện áp vào Vin", d["vin_v"], "V")
         self.entry_fsw = LabeledEntry(left, "Tần số đóng cắt fsw", d["fsw_khz"], "kHz")
         self.entry_lstray = LabeledEntry(left, "Điện cảm ký sinh L_stray", d["l_stray_nh"], "nH")
@@ -209,6 +211,14 @@ class CalculatorTab(ctk.CTkFrame):
         if self.app_ref is not None:
             self.app_ref.push_params_to_optimizer(self.last_result)
             messagebox.showinfo("Đã gửi", "Đã gửi thông số sang tab Optimization & RC-Map.")
+
+    def load_waveform_params(self, params: dict):
+        for key, entry, scale in (("Vin", self.entry_vin, 1),
+                ("V_peak_unprotected", self.entry_vpeak_unprot, 1),
+                ("L_stray_H", self.entry_lstray, config.NANO),
+                ("C_oss_F", self.entry_coss, config.PICO)):
+            if key in params:
+                entry.set(params[key] / scale)
 
     def load_params_from_dict(self, params: dict):
         """Nhận cặp (R_sn, C_sn) tối ưu từ OptimizerTab để hiển thị lại kết quả/dạng

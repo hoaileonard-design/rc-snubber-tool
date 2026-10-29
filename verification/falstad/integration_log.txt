@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "captures": [
+    {
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad\\captures\\falstad_20261029T094927250106Z_7e09dff121e1837e.csv",
+      "sha256": "661381768e697cb23a867d22ea9a97bb0acbca444f8884ad97de93efe6e4239a",
+      "role": "before"
+    },
+    {
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad\\captures\\falstad_20261029T094933406206Z_49e195f9f443fd70.csv",
+      "sha256": "0b411d92cff40f0b89fb1465685d2d4c9cc84d880afd3fb02fd2d5d7aa563914",
+      "role": "after"
+    },
+    {
+      "path": "C:\\Doantotnghiep\\APP_khoiphuc\\verification\\falstad\\captures\\falstad_20261029T094939515440Z_8d273e8e16d89d95.csv",
+      "sha256": "3dbb8e82a6a60a35350c390b5ef94bb564fd227a26d045d56172d15849d3287a",
+      "role": "test_cap"
+    }
+  ],
+  "before_peak_V": 47.85579523517738,
+  "after_peak_V": 27.684096012482986,
+  "before_frequency_MHz": 30.38187781143532,
+  "Lp_nH": 100.00065084792057,
+  "Cp_pF": 274.41523010532967,
+  "desktop_callback_errors": [],
+  "scope": "Real local CircuitJS v115 browser interaction and CTk receive/analyze; equivalent RLC illustration, not P6/hardware"
+}

@@ -1,0 +1,104 @@
+{
+  "gui": "Constructed three real CTk tabs; invoked analysis, transfer, selection and rendering callbacks; no manual Windows clicks",
+  "waveform": {
+    "Vpeak": 38.843483,
+    "f0_MHz": 30.390789941688112,
+    "zeta": 0.001357184785604117,
+    "censored": true,
+    "Lp_nH": 100.1205071317301,
+    "Cp_pF": 273.92599323080736
+  },
+  "cases": [
+    {
+      "case": "L100_Rload10_grid",
+      "R_ohm": 10.0,
+      "C_nF": 4.7,
+      "Vpeak": 27.542627334594727,
+      "ts_ns": 77.70712265667281,
+      "Psn_W": 0.0417705710070927,
+      "n_feasible": 10,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L100_Rload15_grid",
+      "R_ohm": 10.0,
+      "C_nF": 3.3,
+      "Vpeak": 27.637317657470703,
+      "ts_ns": 72.03090875151918,
+      "Psn_W": 0.0259792855395583,
+      "n_feasible": 19,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L100_Rload8_grid",
+      "R_ohm": 10.0,
+      "C_nF": 6.8,
+      "Vpeak": 27.320375442504883,
+      "ts_ns": 82.18920100055982,
+      "Psn_W": 0.0658858332411794,
+      "n_feasible": 7,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L200_Rload10_grid",
+      "R_ohm": 10.0,
+      "C_nF": 10.0,
+      "Vpeak": 27.347745895385746,
+      "ts_ns": 159.11908706443822,
+      "Psn_W": 0.1040492302035908,
+      "n_feasible": 4,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L200_Rload15_grid",
+      "R_ohm": 15.0,
+      "C_nF": 4.7,
+      "Vpeak": 27.73588180541992,
+      "ts_ns": 105.22335838585029,
+      "Psn_W": 0.0468990117444579,
+      "n_feasible": 10,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L200_Rload8_grid",
+      "R_ohm": 10.0,
+      "C_nF": 10.0,
+      "Vpeak": 27.686702728271484,
+      "ts_ns": 155.67061380922235,
+      "Psn_W": 0.1062488867023003,
+      "n_feasible": 2,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L50_Rload10_grid",
+      "R_ohm": 2.2,
+      "C_nF": 4.7,
+      "Vpeak": 28.17589569091797,
+      "ts_ns": 107.60242269425294,
+      "Psn_W": 0.0180859456579366,
+      "n_feasible": 18,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L50_Rload15_grid",
+      "R_ohm": 4.7,
+      "C_nF": 2.1999999999999997,
+      "Vpeak": 28.007266998291016,
+      "ts_ns": 51.43411313177083,
+      "Psn_W": 0.0097609740549282,
+      "n_feasible": 29,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    },
+    {
+      "case": "L50_Rload8_grid",
+      "R_ohm": 4.7,
+      "C_nF": 4.7,
+      "Vpeak": 27.603500366210938,
+      "ts_ns": 66.59335976058611,
+      "Psn_W": 0.0300827225779907,
+      "n_feasible": 13,
+      "evidence": "LTspice 0.5 ns; đã đối chiếu 0.25 ns và giữ dải ±5% 500 ns (P6)"
+    }
+  ],
+  "errors": []
+}
