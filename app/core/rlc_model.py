@@ -40,11 +40,16 @@ def estimate_drive_current(Vin: float, V_peak_unprotected: float, L: float, C_os
         I0 = omega0 * C_oss * sqrt((V_peak_unprotected - Vin)^2 - Vin^2)
     Yeu cau V_peak_unprotected >= 2*Vin de bieu thuc duoi can khong am (ve vat ly, tank LC
     phai vot qua it nhat mot lan Vin so voi muc Vin).
+    Mo hinh gia dinh MOSFET tat tuc thoi. Buck co driver (P5/P6) tat cham, dinh < 2*Vin: kiem chung
+    tren 72 diem LTspice cho sai so V_peak 8 % trung binh, 21 % lon nhat
+    (tools/kiem_chung_mo_hinh_rut_gon.py) -> dung bang quet LTspice/do o tab 3 cho truong hop nay.
     """
     if V_peak_unprotected < 2.0 * Vin:
         raise InputValidationError(
-            "V_peak_unprotected phải >= 2*Vin để mô hình ước lượng dòng kích thích I0 hợp lệ "
-            f"(nhận được V_peak_unprotected={V_peak_unprotected:.3g} V, 2*Vin={2 * Vin:.3g} V)."
+            "Mô hình RLC rút gọn (Park/Luo) giả định MOSFET tắt tức thời nên chỉ áp dụng khi đỉnh chưa "
+            f"snubber >= 2·Vin (nhận được {V_peak_unprotected:.3g} V < {2 * Vin:.3g} V). Mạch này tắt chậm "
+            "(thường do driver/Rg), quá áp do L·di/dt quyết định: hãy chọn R–C từ bảng quét LTspice hoặc "
+            "dữ liệu đo ở tab \"3. Tối ưu & kiểm chứng\"."
         )
     omega0 = undamped_omega(L, C_oss)
     inner = (V_peak_unprotected - Vin) ** 2 - Vin ** 2
